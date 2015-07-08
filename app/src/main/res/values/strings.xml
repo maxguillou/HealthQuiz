@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">HealthQuiz</string>
+
+    <string name="title_activity_question">QuestionActivity</string>
+    <string name="play_button">Play</string>
+    <string name="dummy_button">Test</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_main">Health Quiz</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+</resources>
