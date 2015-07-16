@@ -46,7 +46,16 @@ public class LoginActivity extends Activity implements GoogleApiClient.Connectio
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // User clicked the sign-in button, so begin the sign-in process and automatically
+                // attempt to resolve any errors that occur.
+                mShouldResolve = true;
                 mGoogleApiClient.connect();
+
+                // Show a message to the user that we are signing in.
+                CharSequence text = "CONNEXION EN COURS";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                toast.show();
             }
         });
     }
@@ -64,10 +73,21 @@ public class LoginActivity extends Activity implements GoogleApiClient.Connectio
 
     @Override
     public void onConnected(Bundle bundle) {
-        CharSequence text = "CONNEXION OKKKKK";
+        CharSequence text = "CONNEXION ETABLIE";
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getApplicationContext(), text, duration);
         toast.show();
+
+        // onConnected indicates that an account was selected on the device, that the selected
+        // account has granted any requested permissions to our app and that we were able to
+        // establish a service connection to Google Play services.
+        Log.d("myTagg", "onConnected:" + bundle);
+        mShouldResolve = false;
+
+        // Show the signed-in UI
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -105,6 +125,22 @@ public class LoginActivity extends Activity implements GoogleApiClient.Connectio
         } else {
             // Show the signed-out UI
             showSignedOutUI();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("myTagg", "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
+
+        if (requestCode == RC_SIGN_IN) {
+            // If the error resolution was not successful we should not resolve further.
+            if (resultCode != RESULT_OK) {
+                mShouldResolve = false;
+            }
+
+            mIsResolving = false;
+            mGoogleApiClient.connect();
         }
     }
 
