@@ -30,6 +30,7 @@
             android:layout_above="@+id/linearLayout"
             android:layout_centerHorizontal="true" />
 
+
     </RelativeLayout>
 
     <LinearLayout
@@ -37,7 +38,12 @@
         android:layout_height="0dp"
         android:layout_weight="3"
         android:orientation="vertical">
-
+        <Button
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share on Google+"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
     <LinearLayout

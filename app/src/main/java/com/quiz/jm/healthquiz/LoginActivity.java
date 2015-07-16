@@ -13,6 +13,7 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
+import com.quiz.jm.healthquiz.metier.Global;
 
 /**
  * Created by MAX on 15/07/2015.
@@ -36,12 +37,15 @@ public class LoginActivity extends Activity implements GoogleApiClient.Connectio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Build GoogleApiClient with access to basic profile
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        Global.mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
                 .addScope(new Scope(Scopes.PROFILE))
+                .addScope(new Scope(Scopes.PLUS_LOGIN))
+                .addScope(new Scope(Scopes.PLUS_ME))
                 .build();
+
 
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +53,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.Connectio
                 // User clicked the sign-in button, so begin the sign-in process and automatically
                 // attempt to resolve any errors that occur.
                 mShouldResolve = true;
-                mGoogleApiClient.connect();
+                Global.mGoogleApiClient.connect();
 
                 // Show a message to the user that we are signing in.
                 CharSequence text = "CONNEXION EN COURS";
@@ -68,7 +72,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.Connectio
     @Override
     protected void onStop() {
         super.onStop();
-        mGoogleApiClient.disconnect();
+        Global.mGoogleApiClient.disconnect();
     }
 
     @Override
@@ -115,7 +119,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.Connectio
                 } catch (IntentSender.SendIntentException e) {
                     Log.e("myTagg", "Could not resolve ConnectionResult.", e);
                     mIsResolving = false;
-                    mGoogleApiClient.connect();
+                    Global.mGoogleApiClient.connect();
                 }
             } else {
                 // Could not resolve the connection result, show the user an
@@ -140,7 +144,7 @@ public class LoginActivity extends Activity implements GoogleApiClient.Connectio
             }
 
             mIsResolving = false;
-            mGoogleApiClient.connect();
+            Global.mGoogleApiClient.connect();
         }
     }
 

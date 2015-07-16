@@ -17,5 +17,13 @@
         android:layout_gravity="left|top"
         android:src="@mipmap/ic_launcher" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Déconnexion"
+        android:id="@+id/btDeco"
+        android:layout_gravity="left|bottom"
+        android:textColor="#ffff0517" />
+
 
 </FrameLayout>
